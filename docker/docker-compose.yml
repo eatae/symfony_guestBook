@@ -1,0 +1,39 @@
+version: '3.6'
+
+services:
+
+
+  nginx:
+    build:
+      context: ./nginx
+    volumes:
+      - ../:/var/www/guest_book
+    container_name: ${COMPOSE_PROJECT_NAME}-nginx
+    restart: unless-stopped
+    ports:
+      - "8084:80"
+
+
+  php-fpm:
+    build:
+      context: ./php-fpm
+    volumes:
+      - ../:/var/www/guest_book
+    container_name: ${COMPOSE_PROJECT_NAME}-php-fpm
+    #depends_on:
+      #- postgres
+    environment:
+          XDEBUG_CONFIG: "remote_host=host.docker.internal remote_enable=1"
+          PHP_IDE_CONFIG: "serverName=Docker"
+
+  php-cli:
+    build:
+      context: ./php-cli
+    volumes:
+      - ../:/var/www/guest_book
+    command: sleep 10000
+    container_name: ${COMPOSE_PROJECT_NAME}-php-cli
+
+
+#volumes:
+  #postgres:

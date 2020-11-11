@@ -1,0 +1,25 @@
+db_data
+    - хранение базы данных из контейнера
+
+nginx
+    - конф. для nginx
+    - Dockerfile
+
+php-cli
+    - Dockerfile
+
+
+----------------------
+
+
+Show:
+    localhost:8082
+
+Enter php-cli:
+    docker exec -it my_words-php-cli bash
+
+Docker-Compose up:
+    docker-compose up --build -d
+    docker-compose up -d
+
+
