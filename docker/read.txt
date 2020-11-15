@@ -13,7 +13,7 @@ php-cli
 
 
 Show:
-    localhost:8082
+    localhost:8084
 
 Enter php-cli:
     docker exec -it my_words-php-cli bash
