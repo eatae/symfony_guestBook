@@ -18,54 +18,87 @@ class Conference
      * @ORM\Column(type="integer")
      */
     private $id;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $city;
-
     /**
      * @ORM\Column(type="string", length=4)
      */
     private $year;
-
     /**
      * @ORM\Column(type="boolean")
      */
     private $isInternational;
-
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="conference", orphanRemoval=true)
      */
     private $comments;
 
+    /**
+     * Conference constructor.
+     */
     public function __construct()
     {
         $this->comments = new ArrayCollection();
     }
 
+    /**
+     * To string
+     *
+     * @return string
+     */
+    public function __toString() :string
+    {
+        return $this->city.' '.$this->year;
+    }
+
+
+    /* GET / SET */
+    // ------------
+
+    /**
+     * Id
+     *
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * City
+     *
+     * @return string|null
+     */
     public function getCity(): ?string
     {
         return $this->city;
     }
-
+    /**
+     * @param string $city
+     * @return $this
+     */
     public function setCity(string $city): self
     {
         $this->city = $city;
-
         return $this;
     }
 
+    /**
+     *  Year
+     *
+     * @return string|null
+     */
     public function getYear(): ?string
     {
         return $this->year;
     }
-
+    /**
+     * @param string $year
+     * @return $this
+     */
     public function setYear(string $year): self
     {
         $this->year = $year;
@@ -73,17 +106,27 @@ class Conference
         return $this;
     }
 
+    /**
+     * IsInternational
+     *
+     * @return bool|null
+     */
     public function getIsInternational(): ?bool
     {
         return $this->isInternational;
     }
 
+    /**
+     * @param bool $isInternational
+     * @return $this
+     */
     public function setIsInternational(bool $isInternational): self
     {
         $this->isInternational = $isInternational;
 
         return $this;
     }
+
 
     /**
      * @return Collection|Comment[]

@@ -31,7 +31,7 @@ services:
       context: ./php-cli
     volumes:
       - ../:/var/www/guest_book
-    command: sleep 10000
+    command: sleep 30000
     container_name: ${COMPOSE_PROJECT_NAME}-php-cli
 
 

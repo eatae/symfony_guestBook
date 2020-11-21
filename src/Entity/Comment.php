@@ -16,42 +16,38 @@ class Comment
      * @ORM\Column(type="integer")
      */
     private $id;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $author;
-
     /**
      * @ORM\Column(type="text")
      */
     private $text;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $email;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $foo;
-
     /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
-
     /**
      * @ORM\ManyToOne(targetEntity=Conference::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
     private $conference;
-
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $photo;
+
+
+    public function __toString() :string
+    {
+        return (string) $this->getEmail() .' '. $this->getAuthor();
+    }
+
 
     public function getId(): ?int
     {
@@ -82,6 +78,9 @@ class Comment
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getEmail(): ?string
     {
         return $this->email;
@@ -90,18 +89,6 @@ class Comment
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getFoo(): ?int
-    {
-        return $this->foo;
-    }
-
-    public function setFoo(int $foo): self
-    {
-        $this->foo = $foo;
 
         return $this;
     }

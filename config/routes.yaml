@@ -3,7 +3,7 @@
 #    controller: App\Controller\DefaultController::index
 
 homepage:
-    path: /{name}
+    path: /{?name}
     controller: App\Controller\ConferenceController::index
 
 
@@ -12,6 +12,6 @@ homepage:
 
 ## TESTS  ##
 
-test_1:
+test:
     path: /test/{name}
     controller: App\Controller\TestController::actionTest
