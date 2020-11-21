@@ -33,6 +33,11 @@ class Comment
     private $email;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $foo;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -85,6 +90,18 @@ class Comment
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getFoo(): ?int
+    {
+        return $this->foo;
+    }
+
+    public function setFoo(int $foo): self
+    {
+        $this->foo = $foo;
 
         return $this;
     }

@@ -14,7 +14,7 @@ final class Version20201120195641 extends AbstractMigration
 {
     public function getDescription() : string
     {
-        return '';
+        return 'Add conference table and comment table with relations.';
     }
 
     public function up(Schema $schema) : void
