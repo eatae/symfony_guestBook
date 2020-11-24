@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Conference;
+use App\Repository\CommentRepository;
+use App\Repository\ConferenceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Twig\Environment;
 
 class ConferenceController extends AbstractController
 {
@@ -12,37 +16,41 @@ class ConferenceController extends AbstractController
     /**
      * Index
      *
-     * @param Request $request
-     * @param string $name
+     * @param Environment $twig
+     * @param ConferenceRepository $conferenceRepository
      * @return Response
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
-    public function index(Request $request, string $name = ''): Response
+    public function index(Environment $twig, ConferenceRepository $conferenceRepository): Response
     {
-        $greet = '';
-        if ($name) {
-            $greet = sprintf('<h1>Hello %s!</h1>', htmlspecialchars($name));
-        }
-        dump($name);
-        dump($request);
-        return new Response(
-            <<<EOF
-            <html>
-                <body>
-                    $greet
-                    <img src="/images/scheme.png" />
-                </body>
-            </html>
-EOF
-        );
+        return new Response($twig->render('conference/index.html.twig', [
+            'conferences' => $conferenceRepository->findAll()
+        ]));
     }
 
     /**
+     * Show one
+     *
+     * @param Environment $twig
+     * @param Conference $conference
+     * @param ConferenceRepository $conferenceRepository
      * @return Response
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
-    public function indexOld(): Response
+    public function showOne(Conference $conference, Environment $twig, CommentRepository $commentRepository): Response
     {
-        return $this->render('conference/index.html.twig', [
-            'controller_name' => 'ConferenceController',
-        ]);
+        return new Response($twig->render('conference/show-one.html.twig', [
+            'conference' => $conference,
+            'comments' => $commentRepository->findBy(
+                ['conference' => $conference],
+                ['createdAt' => "DESC"]
+            )])
+        );
     }
+
+
 }

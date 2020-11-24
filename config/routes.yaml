@@ -1,10 +1,16 @@
 #index:
 #    path: /
-#    controller: App\Controller\DefaultController::index
+#    controller: App\Controller\ConferenceController::index
+
+## Conference ##
 
 homepage:
-    path: /{?name}
+    path: /
     controller: App\Controller\ConferenceController::index
+
+conference/show-one:
+    path: /conference/show-one/{conference}
+    controller: App\Controller\ConferenceController::showOne
 
 
 
