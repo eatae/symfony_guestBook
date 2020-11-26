@@ -13,6 +13,13 @@ use Twig\Environment;
 class ConferenceController extends AbstractController
 {
 
+    private $twig;
+
+    public function __construct(Environment $twig)
+    {
+        $this->twig = $twig;
+    }
+
     /**
      * Index
      *
@@ -23,32 +30,35 @@ class ConferenceController extends AbstractController
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function index(Environment $twig, ConferenceRepository $conferenceRepository): Response
+    public function index(ConferenceRepository $conferenceRepository): Response
     {
-        return new Response($twig->render('conference/index.html.twig', [
+        return new Response($this->twig->render('conference/index.html.twig', [
             'conferences' => $conferenceRepository->findAll()
         ]));
     }
 
+
     /**
-     * Show one
-     *
+     * @param Request $request
      * @param Environment $twig
      * @param Conference $conference
-     * @param ConferenceRepository $conferenceRepository
+     * @param CommentRepository $commentRepository
      * @return Response
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function showOne(Conference $conference, Environment $twig, CommentRepository $commentRepository): Response
+    public function showOne(Request $request, Conference $conference, CommentRepository $commentRepository)
     {
-        return new Response($twig->render('conference/show-one.html.twig', [
+        $offset = max(0, $request->query->getInt('offset', 0));
+        $paginator = $commentRepository->getCommentPaginator($conference, $offset);
+
+        return new Response($this->twig->render('conference/show-one.html.twig', [
             'conference' => $conference,
-            'comments' => $commentRepository->findBy(
-                ['conference' => $conference],
-                ['createdAt' => "DESC"]
-            )])
+            'comments' => $paginator,
+            'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
+            'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),
+            ])
         );
     }
 
