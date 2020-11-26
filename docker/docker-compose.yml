@@ -35,5 +35,12 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}-php-cli
 
 
-#volumes:
-  #postgres:
+  redis:
+    image: "redis:6-alpine"
+    volumes:
+      - ./:/var/lib/redis
+      #- ./redis.conf:/usr/local/etc/redis/redis.conf
+    container_name: ${COMPOSE_PROJECT_NAME}-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
