@@ -9,7 +9,7 @@ homepage:
     controller: App\Controller\ConferenceController::index
 
 conference/show-one:
-    path: /conference/show-one/{conference}
+    path: /conference/show-one/{slug}
     controller: App\Controller\ConferenceController::showOne
 
 

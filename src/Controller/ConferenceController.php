@@ -47,6 +47,7 @@ class ConferenceController extends AbstractController
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
+     *
      */
     public function showOne(Request $request, Conference $conference, CommentRepository $commentRepository)
     {

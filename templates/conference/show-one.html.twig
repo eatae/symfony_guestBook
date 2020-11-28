@@ -32,11 +32,11 @@
         {% endfor %}
 
         {% if previous >= 0 %}
-            <a href="{{ path('conference/show-one', { conference: conference.id, offset:previous }) }}">Previous</a>
+            <a href="{{ path('conference/show-one', { slug: conference.slug, offset:previous }) }}">Previous</a>
         {% endif %}
 
         {% if next < comments|length %}
-            <a href="{{ path('conference/show-one', {conference: conference.id, offset: next}) }}">Next</a>
+            <a href="{{ path('conference/show-one', {slug: conference.slug, offset: next}) }}">Next</a>
         {% endif %}
         
 

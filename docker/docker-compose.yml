@@ -12,6 +12,10 @@ services:
     restart: unless-stopped
     ports:
       - "8084:80"
+    links:
+      - redis
+      - php-fpm
+      - php-cli
 
 
   php-fpm:
